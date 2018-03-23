@@ -36,9 +36,9 @@ db_err_log=~/Containers/logs/err_db
 services=(nginx 3d mongo)
 
 err_check() {
-    is_server_down="`docker logs "${services[0]}" | grep 'error'`";
-    is_app_down="`docker logs "${services[1]}" | grep 'failed to connect'`";
-    is_db_down="`docker logs "${services[2]}" | grep 'failed'`";
+    is_server_down="`docker logs "${services[0]}" | grep -io error`";
+    is_app_down="`docker logs "${services[1]}" | grep -io error`";
+    is_db_down="`docker logs "${services[2]}" | grep -io error`";
 
     if [ "$is_app_down" == '' ]; then
         echo -e "Start up complete in "$total" sec!\n";
