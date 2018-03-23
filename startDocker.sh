@@ -44,7 +44,7 @@ err_check() {
         echo -e "Start up complete in "$total" sec!\n";
     else
         docker logs "${services[1]}" >> $app_err_log;
-        echo -e "Connection error in "${services[1]}". Log saved to $app_err_log\n";
+        echo -e "Error in "${services[1]}". Log saved to $app_err_log\n";
         echo -e "Powering down...\n";
         start=`date +%s`;
         docker.compose down;
