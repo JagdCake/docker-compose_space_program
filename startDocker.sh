@@ -28,10 +28,12 @@ conf_copy() {
 
 #sleep 10s; conf_copy
 
-server_err_log=~/Containers/logs/err_server
-encrypt_err_log=~/Containers/logs/err_encrypt
-app_err_log=~/Containers/logs/err_app
-db_err_log=~/Containers/logs/err_db
+app_name=3d
+
+server_err_log=~/Containers/$app_name/logs/err_server
+encrypt_err_log=~/Containers/$app_name/logs/err_encrypt
+app_err_log=~/Containers/$app_name/logs/err_app
+db_err_log=~/Containers/$app_name/logs/err_db
 
 # docker-compose.yml services
 services=(nginx encrypt app mongo)
