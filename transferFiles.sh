@@ -18,3 +18,10 @@ user=`whoami`
 
 # use an environment variable for the server IP address
 ssh $user@$VPSIP mkdir -p Containers/$app_name/logs
+
+scp $app_name.tar.gz $user@$VPSIP:Containers/$app_name/
+
+rm $app_name.tar.gz
+
+# extract the archive in the app dir
+ssh $user@$VPSIP tar -xvzf Containers/$app_name/$app_name.tar.gz -C Containers/$app_name/
