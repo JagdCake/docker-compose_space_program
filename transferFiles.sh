@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# enter path to production dir as the first script argument
-dir=$1
-cd $dir
+# set the app name from the first script argument
+app_name=$1
 
-app_name=3d
+# enter path to production dir as the second script argument
+dir=$2
+cd $dir
 
 # folder / file to exclude from archiving
 exclude=data
