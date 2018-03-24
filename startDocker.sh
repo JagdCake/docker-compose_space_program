@@ -20,7 +20,7 @@ start_up() {
 
 start_up
 
-# may be needed for the first start up
+# may be needed for the first (local) start up
 conf_copy() {
     docker cp ./nginx/nginx.conf nginx:/etc/nginx
     docker exec -it nginx service nginx reload
@@ -29,21 +29,23 @@ conf_copy() {
 #sleep 10s; conf_copy
 
 server_err_log=~/Containers/logs/err_server
+encrypt_err_log=~/Containers/logs/err_encrypt
 app_err_log=~/Containers/logs/err_app
 db_err_log=~/Containers/logs/err_db
 
 # docker-compose.yml services
-services=(nginx 3d mongo)
+services=(nginx encrypt app mongo)
 
 err_check() {
     is_server_down="`docker logs "${services[0]}" | grep -io error`";
-    is_app_down="`docker logs "${services[1]}" | grep -io error`";
-    is_db_down="`docker logs "${services[2]}" | grep -io error`";
+    is_encrypt_down="`docker logs "${services[1]}" | grep -io error`";
+    is_app_down="`docker logs "${services[2]}" | grep -io error`";
+    is_db_down="`docker logs "${services[3]}" | grep -io error`";
 
     if [ "$is_app_down" == '' ]; then
         echo -e "Start up complete in "$total" sec!\n";
     else
-        docker logs "${services[1]}" >> $app_err_log;
+        docker logs "${services[2]}" >> $app_err_log;
         echo -e "Error in "${services[1]}". Log saved to $app_err_log\n";
         echo -e "Powering down...\n";
         start=`date +%s`;
