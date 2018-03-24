@@ -16,12 +16,16 @@ tar --exclude=$exclude -cvzf $app_name.tar.gz *
 # if the VPS username is different than the local one create an environment variable 
 user=`whoami`
 
-# use an environment variable for the server IP address
-ssh $user@$VPSIP mkdir -p Containers/$app_name/logs
+destination="Containers/$app_name/"
 
-scp $app_name.tar.gz $user@$VPSIP:Containers/$app_name/
+# use an environment variable for the server IP address
+ssh $user@$VPSIP mkdir -p $destination'logs'
+
+scp $app_name.tar.gz $user@$VPSIP:$destination
 
 rm $app_name.tar.gz
 
 # extract the archive in the app dir
-ssh $user@$VPSIP tar -xvzf Containers/$app_name/$app_name.tar.gz -C Containers/$app_name/
+ssh $user@$VPSIP tar -xvzf $destination"$app_name".tar.gz -C $destination
+
+ssh $user@$VPSIP rm $destination"$app_name".tar.gz
