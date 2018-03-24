@@ -28,7 +28,8 @@ conf_copy() {
 
 #sleep 10s; conf_copy
 
-app_name=3d
+# set the app name from the first script argument
+app_name=$1
 
 server_err_log=~/Containers/$app_name/logs/err_server
 encrypt_err_log=~/Containers/$app_name/logs/err_encrypt
