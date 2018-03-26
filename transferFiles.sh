@@ -5,6 +5,12 @@ app_name=$1
 
 # enter path to production dir as the second script argument
 dir=$2
+
+if [[ $# -ne 2 ]]; then
+    echo "Usage: ./transferFiles.sh [APP NAME] [PRODUCTION DIR PATH]"
+    exit
+fi
+
 cd $dir
 
 # folder / file to exclude from archiving
