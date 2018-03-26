@@ -2,6 +2,13 @@
 
 # this script works only if it is in the same dir as the Dockerfile / docker-compose.yml
 
+# set the app name with the first script argument
+app_name=$1
+if [ $# -eq 0 ]; then
+    echo "Usage: ./startDocker.sh [APP NAME]"
+    exit
+fi
+
 start_up() {
     start=`date +%s`;
     docker.compose build;
@@ -27,9 +34,6 @@ conf_copy() {
 }
 
 #sleep 10s; conf_copy
-
-# set the app name from the first script argument
-app_name=$1
 
 server_err_log=~/Containers/$app_name/logs/err_server
 encrypt_err_log=~/Containers/$app_name/logs/err_encrypt
