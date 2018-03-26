@@ -40,16 +40,17 @@ db_err_log=~/Containers/$app_name/logs/err_db
 services=(nginx encrypt app mongo)
 
 err_check() {
-    is_server_down="`docker logs "${services[0]}" | grep -io error`";
-    is_encrypt_down="`docker logs "${services[1]}" | grep -io error`";
-    is_app_down="`docker logs "${services[2]}" | grep -io error`";
-    is_db_down="`docker logs "${services[3]}" | grep -io error`";
+    # '2>&1' makes 'docker logs' output to stdout so 'grep' can be used
+    is_server_down="`docker logs "${services[0]}" 2>&1 | grep -io error | tail -n 1`";
+    is_encrypt_down="`docker logs "${services[1]}" 2>&1 | grep -io error | tail -n 1`";
+    is_app_down="`docker logs "${services[2]}" 2>&1 | grep -io error  | tail -n 1`";
+    is_db_down="`docker logs "${services[3]}" 2>&1 | grep -io error | tail -n 1`";
 
     if [ "$is_app_down" == '' ]; then
         echo -e "Start up complete in "$total" sec!\n";
     else
-        docker logs "${services[2]}" >> $app_err_log;
-        echo -e "Error in "${services[1]}". Log saved to $app_err_log\n";
+        docker logs "${services[2]}" 2>> $app_err_log;
+        echo -e "Error in "${services[2]}". Log saved to $app_err_log\n";
         echo -e "Powering down...\n";
         start=`date +%s`;
         docker.compose down;
