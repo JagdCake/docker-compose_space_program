@@ -4,7 +4,8 @@
 
 # set the app name with the first script argument
 app_name=$1
-if [ $# -eq 0 ]; then
+
+if [[ $# -ne 1 ]]; then
     echo "Usage: ./startDocker.sh [APP NAME]"
     exit
 fi
@@ -35,34 +36,29 @@ conf_copy() {
 
 #sleep 10s; conf_copy
 
-server_err_log=~/Containers/$app_name/logs/err_server
-encrypt_err_log=~/Containers/$app_name/logs/err_encrypt
-app_err_log=~/Containers/$app_name/logs/err_app
-db_err_log=~/Containers/$app_name/logs/err_db
-
-# docker-compose.yml services
-services=(nginx encrypt app mongo)
+err_log=~/Containers/$app_name/logs/err
 
 err_check() {
-    # '2>&1' makes 'docker logs' output to stdout so 'grep' can be used
-    is_server_down="`docker logs "${services[0]}" 2>&1 | grep -io error | tail -n 1`";
-    is_encrypt_down="`docker logs "${services[1]}" 2>&1 | grep -io error | tail -n 1`";
-    is_app_down="`docker logs "${services[2]}" 2>&1 | grep -io error  | tail -n 1`";
-    is_db_down="`docker logs "${services[3]}" 2>&1 | grep -io error | tail -n 1`";
+    # the snap version of docker uses 'docker.compose' instead of 'docker-compose'
+    something_is_down="`docker.compose logs | grep -io error | tail -n 1`"
 
-    if [ "$is_app_down" == '' ]; then
+    if  [ "$something_is_down" == '' ]; then
         echo -e "Start up complete in "$total" sec!\n";
-    else
-        docker logs "${services[2]}" 2>> $app_err_log;
-        echo -e "Error in "${services[2]}". Log saved to $app_err_log\n";
+    else 
+        docker.compose logs > $err_log;
+        # assign the line numbers (only) to an array
+        log_lines="(`grep -in error $err_log | cut -d : -f 1`)"
+        echo -e "Error(s)! Log saved to $err_log\nError(s) at line(s): "${log_lines[@]}"\n";
         echo -e "Powering down...\n";
+
         start=`date +%s`;
         docker.compose down;
         end=`date +%s`;
+
         down_time=$((end-start))
         echo -e "\nDocker down in "$down_time" sec!\n"
     fi
 }
 
-# wait for docker to generate logs before checking for any connection errors / 10 seconds seem to be enough
+# wait for docker.compose to generate logs before checking for any errors / 10 seconds seem to be enough
 sleep 10s; err_check
