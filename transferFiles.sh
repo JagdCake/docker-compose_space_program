@@ -11,6 +11,13 @@ if [[ $# -ne 2 ]]; then
     exit
 fi
 
+dir_check="`ls $dir | grep -io docker-compose.yml`"
+
+if [[ $dir_check == '' ]]; then
+    echo "Wrong directory, docker-compose.yml not found."
+    exit
+fi
+
 cd $dir
 
 # folder / file to exclude from archiving
