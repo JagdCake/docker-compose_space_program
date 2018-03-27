@@ -35,6 +35,7 @@ if [[ $dump == 'dump' ]]; then
 fi
 
 docker exec -it mongo mongo admin --eval "db.createUser({ user: '${username}', pwd: '${password}', roles: [ { role: 'root', db: 'admin' } ] })"
+echo -e "\nCreated admin user: ${username}.\n"
 
 docker.compose down
 
