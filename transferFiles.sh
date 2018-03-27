@@ -11,13 +11,13 @@ if [[ $# -ne 2 ]]; then
     exit
 fi
 
-dir_check="`ls $dir | grep -io docker-compose.yml`"
+dir_check="`ls $dir | grep -io docker-compose.`"
 
 red=`tput setaf 1`
 no_color=`tput sgr0`
 
 if [[ $dir_check == '' ]]; then
-    echo -e "Wrong directory, docker-compose.yml ${red}not found${no_color}!"
+    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${no_color}!"
     exit
 fi
 
