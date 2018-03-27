@@ -24,6 +24,16 @@ echo -e "\nSetting up production...\n"
 
 ./startDocker.sh $app_name
 
+# check if there is a mongo dump dir
+dump="`ls . | grep dump`"
+
+if [[ $dump == 'dump' ]]; then
+    docker cp ./dump mongo:/
+    docker exec -it mongo mongorestore dump
+    docker exec -it mongo rm -rf dump
+    echo -e "\nDatabase restored.\n"
+fi
+
 docker exec -it mongo mongo admin --eval "db.createUser({ user: '${username}', pwd: '${password}', roles: [ { role: 'root', db: 'admin' } ] })"
 
 docker.compose down
