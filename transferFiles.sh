@@ -59,3 +59,9 @@ echo -e "\nArchive extracted in $extract_time sec.\n"
 ssh $user@$VPSIP rm $destination"$app_name".tar.gz
 
 echo -e "Done\n"
+
+cd ~- 
+
+scp containerSecurity.sh $user@$VPSIP:$destination
+
+echo -e "\nPlease run 'containerSecurity.sh'.\n"
