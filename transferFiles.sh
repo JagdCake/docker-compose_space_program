@@ -13,8 +13,11 @@ fi
 
 dir_check="`ls $dir | grep -io docker-compose.yml`"
 
+red=`tput setaf 1`
+no_color=`tput sgr0`
+
 if [[ $dir_check == '' ]]; then
-    echo "Wrong directory, docker-compose.yml not found."
+    echo -e "Wrong directory, docker-compose.yml ${red}not found${no_color}!"
     exit
 fi
 
