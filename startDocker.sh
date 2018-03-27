@@ -11,17 +11,17 @@ if [[ $# -ne 1 ]]; then
 fi
 
 start_up() {
-    start=`date +%s`;
-    docker.compose build;
-    end=`date +%s`;
-    build_time=$((end-start));
-    echo -e "\nBuild complete in "$build_time" sec!\n";
+    start=`date +%s`
+    docker.compose build
+    end=`date +%s`
+    build_time=$((end-start))
+    echo -e "\nBuild complete in "$build_time" sec!\n"
 
-    start=`date +%s`;
-    docker.compose up -d;
-    end=`date +%s`;
-    up_time=$((end-start));
-    echo -e "\nDocker up in "$up_time" sec!\n";
+    start=`date +%s`
+    docker.compose up -d
+    end=`date +%s`
+    up_time=$((end-start))
+    echo -e "\nDocker up in "$up_time" sec!\n"
 
     total=$((build_time+up_time))
 }
@@ -43,17 +43,17 @@ err_check() {
     something_is_down="`docker.compose logs | grep -io error | tail -n 1`"
 
     if  [ "$something_is_down" == '' ]; then
-        echo -e "Start up complete in "$total" sec!\n";
+        echo -e "Start up complete in "$total" sec!\n"
     else 
-        docker.compose logs > $err_log;
+        docker.compose logs > $err_log
         # assign the line numbers (only) to an array
         log_lines="(`grep -in error $err_log | cut -d : -f 1`)"
-        echo -e "Error(s)! Log saved to $err_log\nError(s) at line(s): "${log_lines[@]}"\n";
-        echo -e "Powering down...\n";
+        echo -e "Error(s)! Log saved to $err_log\nError(s) at line(s): "${log_lines[@]}"\n"
+        echo -e "Powering down...\n"
 
-        start=`date +%s`;
-        docker.compose down;
-        end=`date +%s`;
+        start=`date +%s`
+        docker.compose down
+        end=`date +%s`
 
         down_time=$((end-start))
         echo -e "\nDocker down in "$down_time" sec!\n"
