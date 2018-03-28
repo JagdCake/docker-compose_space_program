@@ -37,7 +37,8 @@ fi
 docker exec -it mongo mongo admin --eval "db.createUser({ user: '${username}', pwd: '${password}', roles: [ { role: 'root', db: 'admin' } ] })"
 echo -e "\nCreated admin user: ${username}.\n"
 
-docker.compose down
+# if docker.compose (snap version) fails, try docker-compose (normal version)
+docker.compose down; docker-compose down
 
 mv production.yml docker-compose.yml
 echo -e "\nProduction environment set up.\n"
