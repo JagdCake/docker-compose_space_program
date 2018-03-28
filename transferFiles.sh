@@ -34,15 +34,14 @@ creation_time=$((end-start))
 
 echo -e "\nArchive created in $creation_time sec.\n"
 
-# if the VPS username is different than the local one create an environment variable 
-user=`whoami`
+read -p "Enter server username: " user
+read -p "Enter server IP address: " VPS_IP
 
 destination="Containers/$app_name/"
 
-# use an environment variable for the server IP address
-ssh $user@$VPSIP mkdir -p $destination'logs'
+ssh $user@$VPS_IP mkdir -p $destination'logs'
 
-scp $app_name.tar.gz $user@$VPSIP:$destination
+scp $app_name.tar.gz $user@$VPS_IP:$destination
 
 echo
 
@@ -50,18 +49,18 @@ rm $app_name.tar.gz
 
 start=`date +%s`
 # extract the archive in the app dir
-ssh $user@$VPSIP tar -xvzf $destination"$app_name".tar.gz -C $destination
+ssh $user@$VPS_IP tar -xvzf $destination"$app_name".tar.gz -C $destination
 end=`date +%s`
 extract_time=$((end-start))
 
 echo -e "\nArchive extracted in $extract_time sec.\n"
 
-ssh $user@$VPSIP rm $destination"$app_name".tar.gz
+ssh $user@$VP_SIP rm $destination"$app_name".tar.gz
 
 echo -e "Done\n"
 
 cd ~- 
 
-scp containerSecurity.sh $user@$VPSIP:$destination
+scp containerSecurity.sh $user@$VPS_IP:$destination
 
 echo -e "\nPlease run 'containerSecurity.sh'.\n"
