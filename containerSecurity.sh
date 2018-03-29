@@ -19,7 +19,7 @@ if [[ $# -ne 3 ]]; then
     exit
 fi
 
-mv setUpProduction.yml docker-compose.yml
+mv setUpProduction.y* docker-compose.yml
 echo -e "\nSetting up production...\n"
 
 ./startDocker.sh $app_name
@@ -40,7 +40,7 @@ echo -e "\nCreated admin user: ${username}.\n"
 # if docker.compose (snap version) fails, try docker-compose (normal version)
 docker.compose down; docker-compose down
 
-mv production.yml docker-compose.yml
+mv production.y* docker-compose.yml
 echo -e "\nProduction environment set up.\n"
 
 ./startDocker.sh $app_name
