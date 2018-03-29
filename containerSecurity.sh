@@ -19,6 +19,16 @@ if [[ $# -ne 3 ]]; then
     exit
 fi
 
+dir_check="`ls . | grep -io docker-compose.`"
+
+red=`tput setaf 1`
+no_color=`tput sgr0`
+
+if [[ $dir_check == '' ]]; then
+    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${no_color}!"
+    exit
+fi
+
 mv setUpProduction.y* docker-compose.yml
 echo -e "\nSetting up production...\n"
 

@@ -10,6 +10,16 @@ if [[ $# -ne 1 ]]; then
     exit
 fi
 
+dir_check="`ls . | grep -io docker-compose.`"
+
+red=`tput setaf 1`
+no_color=`tput sgr0`
+
+if [[ $dir_check == '' ]]; then
+    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${no_color}!"
+    exit
+fi
+
 start_up() {
     start=`date +%s`
     docker.compose build; docker-compose build
