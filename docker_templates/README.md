@@ -16,7 +16,7 @@ ___
     + __html/__
     + __vhost/__
     ---
-    3. Optional file
+3. Optional file
     + nginx.conf
 ___
 4. Optional folder
