@@ -21,8 +21,9 @@ ___
 #### fail2ban config   
     cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
     nano /etc/fail2ban/jail.local
-        Uncomment "#[sshd]
-                   #enabled = true"
+        Uncomment 
+            "#[sshd]
+             #enabled = true"
         "backend = systemd" 
         "bantime = 604800" # 7 days
         "maxretry = 2"
