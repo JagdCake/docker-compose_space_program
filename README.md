@@ -9,7 +9,7 @@
 
 <p>[X]<span> Start it up ('build' & 'up -d') and do a pre-launch check (check services for any errors) with <strong>startDocker.sh</strong> via <strong>containerSecurity.sh</strong></span></p>
 
-<p>[ ]<span> Launch https://modeling.jagdcake.com</span></p>
+<p>[X]<span> Launch https://modeling.jagdcake.com</span></p>
 
 
 
