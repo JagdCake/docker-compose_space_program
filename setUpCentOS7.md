@@ -21,7 +21,11 @@ ___
 #### fail2ban config   
     cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
     nano /etc/fail2ban/jail.local
+        Uncomment "#[sshd]
+                   #enabled = true"
+        "backend = systemd" 
         "bantime = 604800" # 7 days
+        "maxretry = 2"
         "ignore ip = 127.0.0.1/8 <static IP>"  
     sudo fail2ban-client reload
 ___
@@ -37,5 +41,4 @@ https://linuxconfig.org/how-to-install-and-use-ufw-firewall-on-linux
 
 http://www.the-lazy-dev.com/en/install-fail2ban-with-docker/
 
-
-
+https://linode.com/docs/security/using-fail2ban-for-security/
