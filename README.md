@@ -1,4 +1,14 @@
 # <h1 align="center"><span>(docker-compose) </span>Container Space Program</h1>
+
+### Prerequisites
+
+1. GNU/Linux development environment
+    + Node.js, MongoDB
+    + Docker & docker-compose (snap or repo version)
+3. CentOS 7 production server
+---
+### Checklist
+
 <p>[X]<span> Secure the launch pad (create non-root user, set up SSH) by following <strong>basicSecurity.md</strong></span></p>
 
 <p>[X]<span> Set up and secure the control center (update packages, set up firewall, install fail2ban, install docker) by following <strong>setUpCentOS7.md</strong></span></p>
