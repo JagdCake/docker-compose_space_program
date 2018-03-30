@@ -1,0 +1,17 @@
+version: "2"
+services:
+  app:
+    container_name: app
+    restart: always
+    build: .
+    environment:
+      - SECRET=<express-session secret>
+    ports:
+      - "<Host PORT>:<Container PORT>"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
