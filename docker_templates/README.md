@@ -22,7 +22,7 @@ ___
 4. Optional folder
 + __dump/__ (database dump)
 ___
-5. Default NodeJS app directory structure 
+5. Default Node.js app directory structure 
 + __data/__ (database data from development)
 + __public/__
     + *.css
