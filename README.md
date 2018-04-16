@@ -7,6 +7,12 @@
     + Docker & docker-compose (snap or repo version)
 3. CentOS 7 production server
 ---
+### Container status check
+<ul>
+    <li>https://csp.jagdcake.com</li>
+</ul>
+
+---
 ### Checklist
 
 <p>[X]<span> Secure the launch pad (create non-root user, set up SSH) by following <strong><a href="./basicSecurity.md">basicSecurity.md</a></strong></span></p>
