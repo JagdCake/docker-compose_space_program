@@ -19,9 +19,10 @@
 
 <p>[X]<span> Start it up ('build' & 'up -d') and do a pre-launch check (check services for any errors) with <strong><a href="./startDocker.sh">startDocker.sh</a></strong> via <strong><a href="./containerSecurity.sh">containerSecurity.sh</a></strong></span></p>
 
-<p>[X]<span> Launch</span></p>
+<p>[X]<span> Launch:</span></p>
     <ol>
     <li>https://modeling.jagdcake.com</li>
+    <li>https://dreams.jagdcake.com</li>
     </ol>
 
 
