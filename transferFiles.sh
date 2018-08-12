@@ -55,7 +55,7 @@ extract_time=$((end-start))
 
 echo -e "\nArchive extracted in $extract_time sec.\n"
 
-ssh $user@$VP_SIP rm $destination"$app_name".tar.gz
+ssh $user@$VPS_IP rm $destination"$app_name".tar.gz
 
 echo -e "Done\n"
 
@@ -64,3 +64,4 @@ cd ~-
 scp containerSecurity.sh $user@$VPS_IP:$destination
 
 echo -e "\nPlease run 'containerSecurity.sh'.\n"
+
