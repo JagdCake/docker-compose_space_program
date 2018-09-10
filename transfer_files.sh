@@ -11,7 +11,7 @@ if [[ $# -ne 2 ]]; then
     exit
 fi
 
-dir_check="`ls $dir | grep -io docker-compose.`"
+dir_check="$(ls $dir | grep -io docker-compose.)"
 
 red=`tput setaf 1`
 no_color=`tput sgr0`
