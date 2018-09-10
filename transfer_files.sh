@@ -1,67 +1,66 @@
 #!/bin/bash
 
 # set the app name from the first script argument
-app_name=$1
+app_name="$1"
 
 # enter path to production dir as the second script argument
-dir=$2
+dir="$2"
 
 if [[ $# -ne 2 ]]; then
-    echo "Usage: ./transferFiles.sh [APP NAME] [PRODUCTION DIR PATH]"
+    echo "Usage: ./transfer_files.sh [APP NAME] [PRODUCTION DIR PATH]"
     exit
 fi
 
-dir_check="$(ls $dir | grep -io docker-compose.)"
+dir_check="$(ls "$dir" | grep -io docker-compose.)"
 
-red=`tput setaf 1`
-no_color=`tput sgr0`
+red="$(tput setaf 1)"
+reset_color="$(tput sgr0)"
 
-if [[ $dir_check == '' ]]; then
-    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${no_color}!"
+if [[ "$dir_check" == '' ]]; then
+    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${reset_color}!"
     exit
 fi
 
-cd $dir
+cd "$dir"
+
+git checkout production
 
 # folder / file to exclude from archiving
-exclude=data
+exclude_one=docker_volumes/data
+exclude_two=node_modules
 
 # archive everything that is not hidden and not excluded
-start=`date +%s`
-tar --exclude=$exclude -cvzf $app_name.tar.gz *
-end=`date +%s`
+start="$(date +%s)"
+tar --exclude="$exclude_one" --exclude="$exclude_two" -cvzf "$app_name".tar.gz *
+end="$(date +%s)"
 creation_time=$((end-start))
 
-echo -e "\nArchive created in $creation_time sec.\n"
+echo -e "\nArchive created in "$creation_time" sec.\n"
 
 read -p "Enter server username: " user
 read -p "Enter server IP address: " VPS_IP
 
-destination="Containers/$app_name/"
+destination="Containers/"$app_name"/"
 
-ssh $user@$VPS_IP mkdir -p $destination'logs'
+ssh "$user"@"$VPS_IP" mkdir "$destination" &&
 
-scp $app_name.tar.gz $user@$VPS_IP:$destination
+scp "$app_name".tar.gz "$user"@"$VPS_IP":"$destination"
 
 echo
 
-rm $app_name.tar.gz
+rm "$app_name".tar.gz
 
-start=`date +%s`
+start="$(date +%s)"
 # extract the archive in the app dir
-ssh $user@$VPS_IP tar -xvzf $destination"$app_name".tar.gz -C $destination
-end=`date +%s`
+ssh "$user"@"$VPS_IP" tar -xvzf "$destination""$app_name".tar.gz -C "$destination"
+end="$(date +%s)"
 extract_time=$((end-start))
 
-echo -e "\nArchive extracted in $extract_time sec.\n"
+echo -e "\nArchive extracted in "$extract_time" sec.\n"
 
-ssh $user@$VPS_IP rm $destination"$app_name".tar.gz
+ssh "$user"@"$VPS_IP" rm "$destination""$app_name".tar.gz
 
 echo -e "Done\n"
 
 cd ~- 
-
-scp containerSecurity.sh $user@$VPS_IP:$destination
-
-echo -e "\nPlease run 'containerSecurity.sh'.\n"
 
