@@ -26,11 +26,8 @@
 </ul>
 
 <p>[X]<span> Launch:</span></p>
-    <ol>
+<ol>
     <li>https://modeling.jagdcake.com</li>
     <li>https://dreams.jagdcake.com</li>
     <li>https://request.jagdcake.com</li>
-    </ol>
-
-
-
+</ol>
