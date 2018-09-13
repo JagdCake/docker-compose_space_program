@@ -14,7 +14,7 @@ dump_table() {
 }
 
 transfer_table() {
-    echo -e "Copy table dump to docker container\n"
+    echo -e "Transfer table to docker container\n"
 
     read -e -p "App: (path to dockerized app) " app_dir
     read -p "Container: (container name) " container_name
