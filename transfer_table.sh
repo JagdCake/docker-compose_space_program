@@ -8,7 +8,7 @@ dump_table() {
 
     read -p "Table: (table name) " table_name
     read -p "From: (database name) " from_db_name
-    read -e -p "To: (path to save dump file in) " path_to_dump
+    read -e -p "To: (path (absolute) to save dump file in) " path_to_dump
 
     pg_dump -t "$table_name" "$from_db_name" > "$path_to_dump"/dump
 }
