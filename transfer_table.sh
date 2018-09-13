@@ -3,6 +3,8 @@
 # exit script on any error
 set -e
 
+environment="$1"
+
 dump_table() {
     echo -e "Dump table for transfer to docker container\n"
 
@@ -33,4 +35,16 @@ transfer_table() {
 
     docker.compose down || docker-compose down
 }
+
+if [ "$environment" == 'dev' ]; then
+    dump_table
+    transfer_table
+elif [ "$environment" == 'prod' ]; then
+    dump_table
+    # copy dump over to the server, together with the script
+    transfer_table
+else
+    echo 'Usage: ./transfer_table.sh dev OR prod'
+    exit
+fi
 
