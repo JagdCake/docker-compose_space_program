@@ -27,6 +27,9 @@ transfer_table() {
     docker.compose build || docker-compose build
     docker.compose up -d || docker-compose up -d
 
+    # allow time for the database to start
+    sleep 3
+
     docker cp "$path_to_dump"/dump "$container_name":/home/
     docker exec -it "$container_name" sh -c "psql -h localhost -U "${container_database}" < /home/dump"
     docker exec -it "$container_name" rm /home/dump
