@@ -57,9 +57,9 @@ transfer_dump() {
 if [ "$environment" == 'dev' ]; then
     dump_table
     transfer_table
-elif [ "$environment" == 'prod' ]; then
+elif [ "$environment" == 'stag' ]; then
     dump_table
-    # copy dump over to the server, together with the script
+    transfer_dump
     transfer_table
 else
     echo 'Usage: ./transfer_table.sh dev OR prod'
