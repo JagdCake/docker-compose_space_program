@@ -39,6 +39,21 @@ transfer_table() {
     docker.compose down || docker-compose down
 }
 
+transfer_dump() {
+    echo -e "Copy table dump to production server\n"
+
+    read -p "User: (server username) " username
+    read -p "IP: (server IP address) " ip_address
+    read -e -p "To: (path (absolute) to paste dump file in) " server_path_to_dump
+
+    scp "$path_to_dump"/dump "$username"@"$ip_address":"$server_path_to_dump"
+    rm "$path_to_dump"/dump
+    scp ./transfer_table.sh "$username"@"$ip_address":"$server_path_to_dump"
+
+    echo -e "Now, run - ./transfer_table.sh prod\n"
+    ssh -t "$username"@"$ip_address" "cd "$server_path_to_dump"; bash"
+}
+
 if [ "$environment" == 'dev' ]; then
     dump_table
     transfer_table
