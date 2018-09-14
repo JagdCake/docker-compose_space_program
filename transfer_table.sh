@@ -60,9 +60,13 @@ if [ "$environment" == 'dev' ]; then
 elif [ "$environment" == 'stag' ]; then
     dump_table
     transfer_dump
+elif [ "$environment" == 'prod' ]; then
+    path_to_dump="$(pwd)"
     transfer_table
+    echo -e "Transfer successful\n"
+    echo "You can delete "$path_to_dump"/transfer_table.sh"
 else
-    echo 'Usage: ./transfer_table.sh dev OR prod'
+    echo 'Usage: ./transfer_table.sh dev OR stag OR prod (but only when prompted)'
     exit
 fi
 
