@@ -51,6 +51,7 @@ transfer_dump() {
     scp ./transfer_table.sh "$username"@"$ip_address":"$server_path_to_dump"
 
     echo -e "Now, run - ./transfer_table.sh prod\n"
+    # Source: https://stackoverflow.com/questions/626533/how-can-i-ssh-directly-to-a-particular-directory/626574#626574
     ssh -t "$username"@"$ip_address" "cd "$server_path_to_dump"; bash"
 }
 
