@@ -58,8 +58,6 @@ transfer_archive() {
     scp "$project_name".tar.gz "$username"@"$ip_address":"$destination"/"$project_name"
 }
 
-rm "$app_name".tar.gz
-
 decompress_files() {
     start="$(date +%s)"
 
@@ -72,9 +70,14 @@ decompress_files() {
     echo -e "\nArchive extracted in "$decompression_time" sec.\n"
 }
 
-ssh "$user"@"$VPS_IP" rm "$destination""$app_name".tar.gz
+clean_up() {
+    echo -e "Performing cleanup\n"
 
-echo -e "Done\n"
+    rm "$project_name".tar.gz
+    ssh "$username"@"$ip_address" rm "$destination"/"$project_name"/"$project_name".tar.gz
 
-cd ~- 
+    echo -e "All done.\n"
+
+    cd ~-
+}
 
