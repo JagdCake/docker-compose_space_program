@@ -78,3 +78,8 @@ clean_up() {
     cd ~-
 }
 
+compress_files
+transfer_archive
+decompress_files
+clean_up
+
