@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# exit script on any error
+set -e
+
 ### Options ###
 # files / folders to exclude from archiving
 files_to_exclude=(docker_volumes/data node_modules)
