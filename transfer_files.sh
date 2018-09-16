@@ -46,16 +46,17 @@ compress_files() {
     echo -e "\nArchive created in "$compression_time" sec.\n"
 }
 
-read -p "Enter server username: " user
-read -p "Enter server IP address: " VPS_IP
+transfer_archive() {
+    echo -e "Transfer archived files to server\n"
 
-destination="Containers/"$app_name"/"
+    read -p "User: (server username) " username
+    read -p "IP: (server IP address) " ip_address
+    read -p "Destination: (path (absolute) to create project dir in) " destination
 
-ssh "$user"@"$VPS_IP" mkdir "$destination" &&
+    ssh "$username"@"$ip_address" mkdir "$destination"/"$project_name"
 
-scp "$app_name".tar.gz "$user"@"$VPS_IP":"$destination"
-
-echo
+    scp "$project_name".tar.gz "$username"@"$ip_address":"$destination"/"$project_name"
+}
 
 rm "$app_name".tar.gz
 
