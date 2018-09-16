@@ -61,6 +61,12 @@ check_for_dump() {
         case "$choice" in
             "Yes" )
                 read -e -p "Dump: (path to dump directory) " path_to_dump
+
+                if [ ! -d "$path_to_dump" ]; then
+                    echo ""$path_to_dump" is not a directory"
+                    check_for_dump
+                fi
+
                 break;;
             "No" )
                 dump_table
