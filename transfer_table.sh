@@ -55,11 +55,27 @@ transfer_dump() {
     ssh -t "$username"@"$ip_address" "cd "$server_path_to_dump"; bash"
 }
 
+check_for_dump() {
+    echo -e "Do you have a database dump?\n"
+    select choice in "Yes" "No" "Cancel"; do
+        case "$choice" in
+            "Yes" )
+                read -e -p "Dump: (path to dump directory) " path_to_dump
+                break;;
+            "No" )
+                dump_table
+                break;;
+            "Cancel" )
+                exit;;
+        esac
+    done
+}
+
 if [ "$environment" == 'dev' ]; then
-    dump_table
+    check_for_dump
     transfer_table
 elif [ "$environment" == 'stag' ]; then
-    dump_table
+    check_for_dump
     transfer_dump
 elif [ "$environment" == 'prod' ]; then
     path_to_dump="$(pwd)"
