@@ -9,15 +9,17 @@ if [[ $# -ne 2 ]]; then
     exit
 fi
 
-dir_check="$(ls "$dir" | grep -io docker-compose.)"
+project_check() {
+    red="$(tput setaf 1)"
+    reset_color="$(tput sgr0)"
 
-red="$(tput setaf 1)"
-reset_color="$(tput sgr0)"
+    ls "$project_path"/docker-compose.* > /dev/null 2>&1
 
-if [[ "$dir_check" == '' ]]; then
-    echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${reset_color}!"
-    exit
-fi
+    if [[ $? -ne 0 ]]; then
+        echo -e "Wrong directory, docker-compose.y(a)ml ${red}not found${reset_color}!"
+        exit
+    fi
+}
 
 cd "$dir"
 
