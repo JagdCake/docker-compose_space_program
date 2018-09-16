@@ -6,13 +6,13 @@ set -e
 environment="$1"
 
 dump_table() {
-    echo -e "Dump table for transfer to docker container\n"
+    echo -e "Dump table(s) for transfer to docker container\n"
 
-    read -p "Table: (table name) " table_name
+    read -p "Table(s): (table name(s) space separated) " -a table_names
     read -p "From: (database name) " from_db_name
     read -e -p "To: (path (absolute) to save dump file in) " path_to_dump
 
-    pg_dump -O -t "$table_name" "$from_db_name" > "$path_to_dump"/dump
+    pg_dump -O $(echo "${table_names[@]/#/-t }") "$from_db_name" > "$path_to_dump"/dump
 }
 
 transfer_table() {
