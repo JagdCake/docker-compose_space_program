@@ -60,13 +60,17 @@ transfer_archive() {
 
 rm "$app_name".tar.gz
 
-start="$(date +%s)"
-# extract the archive in the app dir
-ssh "$user"@"$VPS_IP" tar -xvzf "$destination""$app_name".tar.gz -C "$destination"
-end="$(date +%s)"
-extract_time=$((end-start))
+decompress_files() {
+    start="$(date +%s)"
 
-echo -e "\nArchive extracted in "$extract_time" sec.\n"
+    # extract the archive in the project directory
+    ssh "$username"@"$ip_address" tar -xvzf "$destination"/"$project_name"/"$project_name".tar.gz -C "$destination"/"$project_name"
+
+    end="$(date +%s)"
+    decompression_time=$((end-start))
+
+    echo -e "\nArchive extracted in "$decompression_time" sec.\n"
+}
 
 ssh "$user"@"$VPS_IP" rm "$destination""$app_name".tar.gz
 
