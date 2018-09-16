@@ -1,5 +1,10 @@
 #!/bin/bash
 
+### Options ###
+# files / folders to exclude from archiving
+files_to_exclude=(docker_volumes/data node_modules)
+### ###
+
 project_name="$1"
 
 project_path="$2"
@@ -27,14 +32,10 @@ compress_files() {
 
     git checkout production
 
-    # folder / file to exclude from archiving
-    exclude_one=docker_volumes/data
-    exclude_two=node_modules
-
     start="$(date +%s)"
 
     # archive everything that is not hidden and not excluded
-    tar --exclude="$exclude_one" --exclude="$exclude_two" -cvzf "$project_name".tar.gz *
+    tar $(echo "${files_to_exclude[@]/#/--exclude=}") -cvzf "$project_name".tar.gz *
 
     end="$(date +%s)"
     compression_time=$((end-start))
