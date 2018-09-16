@@ -21,21 +21,26 @@ project_check() {
     fi
 }
 
-cd "$dir"
+compress_files() {
+    project_check
+    cd "$project_path"
 
-git checkout production
+    git checkout production
 
-# folder / file to exclude from archiving
-exclude_one=docker_volumes/data
-exclude_two=node_modules
+    # folder / file to exclude from archiving
+    exclude_one=docker_volumes/data
+    exclude_two=node_modules
 
-# archive everything that is not hidden and not excluded
-start="$(date +%s)"
-tar --exclude="$exclude_one" --exclude="$exclude_two" -cvzf "$app_name".tar.gz *
-end="$(date +%s)"
-creation_time=$((end-start))
+    start="$(date +%s)"
 
-echo -e "\nArchive created in "$creation_time" sec.\n"
+    # archive everything that is not hidden and not excluded
+    tar --exclude="$exclude_one" --exclude="$exclude_two" -cvzf "$project_name".tar.gz *
+
+    end="$(date +%s)"
+    compression_time=$((end-start))
+
+    echo -e "\nArchive created in "$compression_time" sec.\n"
+}
 
 read -p "Enter server username: " user
 read -p "Enter server IP address: " VPS_IP
