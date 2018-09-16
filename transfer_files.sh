@@ -1,13 +1,11 @@
 #!/bin/bash
 
-# set the app name from the first script argument
-app_name="$1"
+project_name="$1"
 
-# enter path to production dir as the second script argument
-dir="$2"
+project_path="$2"
 
 if [[ $# -ne 2 ]]; then
-    echo "Usage: ./transfer_files.sh [APP NAME] [PRODUCTION DIR PATH]"
+    echo "Usage: ./transfer_files.sh [PROJECT NAME] [PATH TO PROJECT]"
     exit
 fi
 
