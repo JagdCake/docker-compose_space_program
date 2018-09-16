@@ -16,7 +16,7 @@ dump_table() {
 }
 
 transfer_table() {
-    echo -e "Transfer table to docker container\n"
+    echo -e "Transfer table(s) to docker container\n"
 
     read -e -p "App: (path to dockerized app) " app_dir
     read -p "Container: (container name) " container_name
@@ -40,7 +40,7 @@ transfer_table() {
 }
 
 transfer_dump() {
-    echo -e "Copy table dump to production server\n"
+    echo -e "Copy table(s) dump to production server\n"
 
     read -p "User: (server username) " username
     read -p "IP: (server IP address) " ip_address
