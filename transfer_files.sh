@@ -42,8 +42,6 @@ compress_files() {
 
     git checkout production
 
-    start="$(date +%s)"
-
     if [ "$mode" == 'all' ]; then
         # archive everything that is not hidden and not excluded
         tar $(echo "${files_to_exclude[@]/#/--exclude=}") -cvzf "$project_name".tar.gz *
@@ -52,10 +50,7 @@ compress_files() {
         tar -cvzf "$project_name".tar.gz $(echo "${updated_files[@]}")
     fi
 
-    end="$(date +%s)"
-    compression_time=$((end-start))
-
-    echo -e "\nArchive created in "$compression_time" sec.\n"
+    echo -e "\nArchive created and ready for transfer.\n"
 }
 
 transfer_archive() {
@@ -79,15 +74,10 @@ transfer_archive() {
 }
 
 decompress_files() {
-    start="$(date +%s)"
-
     # extract the archive in the project directory
     ssh "$username"@"$ip_address" tar -xvzf "$destination"/"$project_name"/"$project_name".tar.gz -C "$destination"/"$project_name"
 
-    end="$(date +%s)"
-    decompression_time=$((end-start))
-
-    echo -e "\nArchive extracted in "$decompression_time" sec.\n"
+    echo -e "\nArchive extracted in "$destination"/"$project_name"/ sec.\n"
 }
 
 clean_up() {
