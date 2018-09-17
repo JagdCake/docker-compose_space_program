@@ -26,6 +26,16 @@ project_check() {
     fi
 }
 
+select_files() {
+    echo "Archive all files changed AFTER a specific tagged commit"
+    read -p "From tag: " from_tag
+    echo "To a specific tagged commit (INCLUDING)"
+    echo "Leave blank to include ALL files changed since"
+    read -p "To tag: " to_tag
+
+    mapfile -t updated_files < <(git log --pretty=format: --name-only "$from_tag".."$to_tag" | sort | uniq)
+}
+
 compress_files() {
     project_check
     cd "$project_path"
