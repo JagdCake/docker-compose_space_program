@@ -61,11 +61,19 @@ compress_files() {
 transfer_archive() {
     echo -e "Transfer archived files to server\n"
 
-    read -p "User: (server username) " username
-    read -p "IP: (server IP address) " ip_address
-    read -p "Destination: (path (absolute) to create project dir in) " destination
+    echo "Enter server username"
+    read -p "Username: " username
+    echo "Enter server IP address"
+    read -p "IP: " ip_address
 
-    ssh "$username"@"$ip_address" mkdir "$destination"/"$project_name"
+    if [ "$mode" == 'all' ]; then
+        echo "Enter absolute path to directory you want to create the project in"
+        read -p "Destination: " destination
+        ssh "$username"@"$ip_address" mkdir "$destination"/"$project_name"
+    elif [ "$mode" == 'specific' ]; then
+        echo "Enter absolute path to the directory where the project folder is"
+        read -p "Destination: " destination
+    fi
 
     scp "$project_name".tar.gz "$username"@"$ip_address":"$destination"/"$project_name"
 }
