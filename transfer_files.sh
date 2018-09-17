@@ -37,6 +37,8 @@ select_files() {
 }
 
 compress_files() {
+    mode="$1"
+
     project_check
     cd "$project_path"
 
@@ -44,8 +46,13 @@ compress_files() {
 
     start="$(date +%s)"
 
-    # archive everything that is not hidden and not excluded
-    tar $(echo "${files_to_exclude[@]/#/--exclude=}") -cvzf "$project_name".tar.gz *
+    if [ "$mode" == 'all' ]; then
+        # archive everything that is not hidden and not excluded
+        tar $(echo "${files_to_exclude[@]/#/--exclude=}") -cvzf "$project_name".tar.gz *
+    elif [ "$mode" == 'specific' ]; then
+        select_files
+        tar -cvzf "$project_name".tar.gz $(echo "${updated_files[@]}")
+    fi
 
     end="$(date +%s)"
     compression_time=$((end-start))
