@@ -37,8 +37,6 @@ select_files() {
 }
 
 compress_files() {
-    mode="$1"
-
     project_check
     cd "$project_path"
 
@@ -94,6 +92,19 @@ clean_up() {
 
     cd ~-
 }
+
+select choice in "Transfer only files changed AFTER the last deployment" "Transfer ALL project files" "Quit"; do
+    case "$choice" in
+        "Transfer only files changed AFTER the last deployment" )
+            mode="specific"
+            break;;
+        "Transfer ALL project files" )
+            mode="all"
+            break;;
+        "Quit" )
+            exit;;
+    esac
+done
 
 compress_files
 transfer_archive
