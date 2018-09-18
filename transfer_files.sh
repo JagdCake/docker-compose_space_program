@@ -26,6 +26,12 @@ project_check() {
     fi
 }
 
+dependency_check() {
+    if [ $(which fzf 2>/dev/null) ]; then
+        dependency=true
+    fi
+}
+
 select_files() {
     echo "Archive all files changed AFTER a specific tagged commit"
     read -p "From tag: " from_tag
