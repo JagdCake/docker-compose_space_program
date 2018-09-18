@@ -33,11 +33,27 @@ dependency_check() {
 }
 
 select_files() {
-    echo "Archive all files changed AFTER a specific tagged commit"
-    read -p "From tag: " from_tag
-    echo "To a specific tagged commit (INCLUDING)"
-    echo "Leave blank to include ALL files changed since"
-    read -p "To tag: " to_tag
+    dependency_check
+
+    from_tag_msg='Archive all files changed AFTER a specific tagged commit'
+    from_tag_prmt='From tag: '
+    to_tag_msg='To a specific tagged commit (INCLUDING)'
+    to_tag_prmt='To tag: '
+
+    if [ "$dependency" == true ]; then
+        from_tag="$(git tag | fzf --header="$from_tag_msg" --prompt="$from_tag_prmt")"
+        if [ "$(git tag | wc -l)" -gt 1 ]; then
+            to_tag="$(git tag | fzf --header="$to_tag_msg" --query='Cancel selection to include ALL files changed since' --prompt="$to_tag_prmt")"
+        fi
+    else
+        echo "$first_tag_msg"
+        read -p "$from_tag_prmt" from_tag
+        if [ "$(git tag | wc -l)" -gt 1 ]; then
+            echo "$to_tag_msg"
+            echo "Leave blank to include ALL files changed since"
+            read -p "$to_tag_prmt" to_tag
+        fi
+    fi
 
     mapfile -t updated_files < <(git log --pretty=format: --name-only "$from_tag".."$to_tag" | sort | uniq)
 }
