@@ -116,6 +116,7 @@ compress_files() {
     elif [ "$mode" == 'specific' ]; then
         select_files
         tar -cvf "$project_name".tar $(echo "${updated_files[@]}")
+        check_for_ignored_modified_files
     fi
 
     bzip2 "$project_name".tar
