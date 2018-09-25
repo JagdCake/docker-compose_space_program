@@ -76,6 +76,25 @@ check_for_ignored_modified_files() {
         to_tag_date=$(date -d $(echo "$to_tag_date") +%s)
     fi
 
+    files_modified=false
+
+    while read -r file; do
+        # make sure to check only for gitignored files, not directories
+        if [ -f "$file" ]; then
+            # show the last modification time of a file / folder
+            last_mod_date=$(date +%F -r "$file") # YEAR-MM-DD
+            last_mod_date=$(date -d $(echo "$last_mod_date") +%s)
+
+            if [[ "$last_mod_date" -gt "$from_tag_date" && -z "$to_tag_date" ]]; then
+                echo ""$file" has been modified"
+                files_modified=true
+            elif [[ ! -z "$to_tag_date" && "$to_tag_date" -gt "$last_mod_date" && "$last_mod_date" -gt "$from_tag_date" ]]; then
+                echo ""$file" has been modified"
+                files_modified=true
+            fi
+        fi
+    done < .gitignore
+
 }
 
 compress_files() {
