@@ -151,8 +151,9 @@ decompress_files() {
     echo -e "\nArchive extracted in "$destination"/"$project_name"/\n"
 
     if [ "$mode" == 'specific' ]; then
-        docker-compose down || docker.compose down && docker-compose build || docker.compose build && docker-compose up -d || docker.compose up -d &&
-        echo -e ""$project_name" container restarted successfully.\n"
+        echo -e "Execute the following commands:\n"
+        echo "docker-compose down || docker.compose down && docker-compose build || docker.compose build && docker-compose up -d || docker.compose up -d && exit"
+        ssh -t "$username"@"$ip_address" "cd "$destination"/"$project_name"/; bash"
     fi
 }
 
