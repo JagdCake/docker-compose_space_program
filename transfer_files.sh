@@ -100,6 +100,7 @@ check_for_ignored_modified_files() {
         read -e -p "Filename(s): (space separated) " -a files_to_add
 
         # add the selected files to the already created tar
+        tar -rvf "$project_name".tar $(echo "${files_to_add[@]}")
     fi
 }
 
