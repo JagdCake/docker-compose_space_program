@@ -71,6 +71,10 @@ check_for_ignored_modified_files() {
     # Source: https://unix.stackexchange.com/questions/84381/how-to-compare-two-dates-in-a-shell/170982#170982
     from_tag_date=$(date -d $(echo "$from_tag_date") +%s)
 
+    if [ ! -z "$to_tag" ]; then
+        to_tag_date="$(git show -s --format=%ci "$to_tag" | tail -n 1 | awk '{ print $1 }')"
+        to_tag_date=$(date -d $(echo "$to_tag_date") +%s)
+    fi
 
 }
 
