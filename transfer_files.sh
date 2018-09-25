@@ -148,7 +148,7 @@ decompress_files() {
     # extract the archive in the project directory
     ssh "$username"@"$ip_address" tar -xvzf "$destination"/"$project_name"/"$project_name".tar.gz -C "$destination"/"$project_name"
 
-    echo -e "\nArchive extracted in "$destination"/"$project_name"/ sec.\n"
+    echo -e "\nArchive extracted in "$destination"/"$project_name"/\n"
 
     if [ "$mode" == 'specific' ]; then
         docker-compose down || docker.compose down && docker-compose build || docker.compose build && docker-compose up -d || docker.compose up -d &&
