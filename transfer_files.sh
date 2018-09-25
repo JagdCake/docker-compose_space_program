@@ -166,8 +166,6 @@ clean_up() {
     ssh "$username"@"$ip_address" rm "$destination"/"$project_name"/"$project_name".tar.gz
 
     echo -e "All done.\n"
-
-    cd ~-
 }
 
 select choice in "Transfer only files changed AFTER the last deployment" "Transfer ALL project files" "Quit"; do
