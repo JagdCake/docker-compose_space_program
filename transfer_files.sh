@@ -119,7 +119,7 @@ compress_files() {
         check_for_ignored_modified_files
     fi
 
-    bzip2 "$project_name".tar
+    gzip "$project_name".tar
 
     echo -e "\nArchive created and ready for transfer.\n"
 }
@@ -141,12 +141,12 @@ transfer_archive() {
         read -p "Destination: " destination
     fi
 
-    scp "$project_name".tar.bz2 "$username"@"$ip_address":"$destination"/"$project_name"
+    scp "$project_name".tar.gz "$username"@"$ip_address":"$destination"/"$project_name"
 }
 
 decompress_files() {
     # extract the archive in the project directory
-    ssh "$username"@"$ip_address" tar -xvjf "$destination"/"$project_name"/"$project_name".tar.bz2 -C "$destination"/"$project_name"
+    ssh "$username"@"$ip_address" tar -xvzf "$destination"/"$project_name"/"$project_name".tar.gz -C "$destination"/"$project_name"
 
     echo -e "\nArchive extracted in "$destination"/"$project_name"/ sec.\n"
 
@@ -159,8 +159,8 @@ decompress_files() {
 clean_up() {
     echo -e "Performing cleanup\n"
 
-    rm "$project_name".tar.bz2
-    ssh "$username"@"$ip_address" rm "$destination"/"$project_name"/"$project_name".tar.bz2
+    rm "$project_name".tar.gz
+    ssh "$username"@"$ip_address" rm "$destination"/"$project_name"/"$project_name".tar.gz
 
     echo -e "All done.\n"
 
