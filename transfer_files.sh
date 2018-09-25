@@ -64,6 +64,14 @@ check_for_ignored_modified_files() {
     if [ ! -f .gitignore ]; then
         return
     fi
+
+    # get the date (only, not the whole timestamp) of the selected tagged commit
+    from_tag_date="$(git show -s --format=%ci "$from_tag" | tail -n 1 | awk '{ print $1 }')" # YEAR-MM-DD
+    # convert string date into integer
+    # Source: https://unix.stackexchange.com/questions/84381/how-to-compare-two-dates-in-a-shell/170982#170982
+    from_tag_date=$(date -d $(echo "$from_tag_date") +%s)
+
+
 }
 
 compress_files() {
