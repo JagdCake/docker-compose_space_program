@@ -115,7 +115,9 @@ compress_files() {
         tar $(echo "${files_to_exclude[@]/#/--exclude=}") -cvf "$project_name".tar *
     elif [ "$mode" == 'specific' ]; then
         select_files
+        echo "The following files will be transferred to the server:"
         tar -cvf "$project_name".tar $(echo "${updated_files[@]}")
+        echo
         check_for_ignored_modified_files
     fi
 
