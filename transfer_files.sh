@@ -58,6 +58,14 @@ select_files() {
     mapfile -t updated_files < <(git log --pretty=format: --name-only "$from_tag".."$to_tag" | sort | uniq)
 }
 
+# check if any gitignored files have been modified after the selected commit
+check_for_ignored_modified_files() {
+    # don't do anything if there is no .gitignore file
+    if [ ! -f .gitignore ]; then
+        return
+    fi
+}
+
 compress_files() {
     project_check
     cd "$project_path"
