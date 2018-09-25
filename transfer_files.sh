@@ -95,6 +95,12 @@ check_for_ignored_modified_files() {
         fi
     done < .gitignore
 
+    if [ "$files_modified" = true ]; then
+        echo -e "\nSelect gitignored files to transfer"
+        read -e -p "Filename(s): (space separated) " -a files_to_add
+
+        # add the selected files to the already created tar
+    fi
 }
 
 compress_files() {
