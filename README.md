@@ -7,13 +7,7 @@
     + PostgreSQL
     + Docker & docker-compose (snap or repo version)
 3. CentOS 7 production server
----
-### Container status check
-<ul>
-    <li>https://csp.jagdcake.com</li>
-</ul>
 
----
 ### Checklist
 
 <p>[X]<span> Secure the launch pad (create non-root user, set up SSH) by following <strong><a href="./basic_security.md">basic_security.md</a></strong></span></p>
@@ -28,6 +22,6 @@
 <p>[X]<span> Launch:</span></p>
 <ol>
     <li>https://modeling.jagdcake.com</li>
-    <li>https://dreams.jagdcake.com</li>
-    <li>https://request.jagdcake.com</li>
+    <li>RETIRED <span style="text-decoration: line-through">https://dreams.jagdcake.com</span></li>
+    <li>RETIRED <span style="text-decoration: line-through">https://request.jagdcake.com</span></li>
 </ol>
