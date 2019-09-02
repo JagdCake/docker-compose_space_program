@@ -1,4 +1,5 @@
 # <h1 align="center"><span>(docker-compose) </span>Container Space Program</h1>
+## Superseded by https://github.com/JagdCake/ansible.playbooks
 
 ### Prerequisites
 
